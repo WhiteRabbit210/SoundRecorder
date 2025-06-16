@@ -1,0 +1,26 @@
+{
+  "name": "media-recorder-app",
+  "version": "1.0.0",
+  "description": "iOS Safari compatible voice recording and upload web app",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "start:https": "node server/https-server.js",
+    "dev": "nodemon server/index.js",
+    "client": "live-server public --port=3001",
+    "cert": "node generate-cert.js"
+  },
+  "keywords": ["audio", "recording", "mediarecorder", "ios", "safari"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "live-server": "^1.2.2"
+  }
+}

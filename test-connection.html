@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>接続テスト</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            padding: 20px;
+            text-align: center;
+        }
+        .status {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        .success { color: #34C759; }
+        .error { color: #FF3B30; }
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 8px;
+            border: none;
+            background: #007AFF;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>接続テスト</h1>
+    <div class="status success">✅ HTTPS接続成功！</div>
+    <p>現在のURL: <code id="currentUrl"></code></p>
+    
+    <button onclick="testMicrophone()">マイクテスト</button>
+    <button onclick="window.location.href='/'">アプリを開く</button>
+    
+    <div id="result"></div>
+    
+    <script>
+        document.getElementById('currentUrl').textContent = window.location.href;
+        
+        async function testMicrophone() {
+            const result = document.getElementById('result');
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                result.innerHTML = '<p class="success">✅ マイクアクセス成功！</p>';
+                stream.getTracks().forEach(track => track.stop());
+            } catch (error) {
+                result.innerHTML = '<p class="error">❌ マイクアクセス失敗: ' + error.message + '</p>';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>音声録音アプリ</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>音声録音アプリ</h1>
+            <p class="subtitle">iOS Safari対応</p>
+        </header>
+
+        <main>
+            <div class="recorder-section">
+                <div class="recording-status" id="recordingStatus">
+                    <span class="status-text">準備完了</span>
+                    <span class="recording-time" id="recordingTime">00:00</span>
+                </div>
+
+                <div class="visualizer-container">
+                    <canvas id="visualizer" width="300" height="100"></canvas>
+                </div>
+
+                <div class="controls">
+                    <button id="recordBtn" class="btn btn-record" disabled>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <circle cx="12" cy="12" r="8"/>
+                        </svg>
+                        <span>録音開始</span>
+                    </button>
+                    
+                    <button id="pauseBtn" class="btn btn-pause" disabled>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <rect x="6" y="4" width="4" height="16"/>
+                            <rect x="14" y="4" width="4" height="16"/>
+                        </svg>
+                        <span>一時停止</span>
+                    </button>
+                    
+                    <button id="stopBtn" class="btn btn-stop" disabled>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <rect x="4" y="4" width="16" height="16"/>
+                        </svg>
+                        <span>停止</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="playback-section" id="playbackSection" style="display: none;">
+                <h2>録音した音声</h2>
+                <audio id="audioPlayer" controls></audio>
+                
+                <div class="file-info">
+                    <span id="fileName"></span>
+                    <span id="fileSize"></span>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="downloadBtn" class="btn btn-secondary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                        </svg>
+                        <span>ダウンロード</span>
+                    </button>
+                    
+                    <button id="uploadBtn" class="btn btn-primary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+                        </svg>
+                        <span>アップロード</span>
+                    </button>
+                    
+                    <button id="s3UploadBtn" class="btn btn-primary" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <path d="M12 18v-6"/>
+                            <path d="m9 15 3-3 3 3"/>
+                        </svg>
+                        <span>S3にアップロード</span>
+                    </button>
+                </div>
+
+                <div class="upload-progress" id="uploadProgress" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span class="progress-text" id="progressText">0%</span>
+                </div>
+            </div>
+
+            <div class="recordings-list" id="recordingsList">
+                <h2>録音履歴</h2>
+                <div class="list-container" id="listContainer">
+                    <p class="empty-message">録音履歴はありません</p>
+                </div>
+            </div>
+        </main>
+
+        <div class="error-message" id="errorMessage" style="display: none;">
+            <p id="errorText"></p>
+            <button class="btn-close" onclick="hideError()">×</button>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <!-- AWS SDK（S3アップロード用） -->
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1062.0.min.js"></script>
+    <script src="js/recorder.js"></script>
+    <script src="js/visualizer.js"></script>
+    <script src="js/uploader.js"></script>
+    <script src="js/s3-uploader.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
